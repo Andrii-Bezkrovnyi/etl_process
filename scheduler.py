@@ -13,10 +13,11 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 scheduler = BlockingScheduler()
 
 
-@scheduler.scheduled_job("cron", hour=17, minute=10)
+@scheduler.scheduled_job("cron", hour=15, minute=00)
+# @scheduler.scheduled_job("interval", seconds=10)  # Uncomment for testing
 def daily_job():
-    # today = date.today().isoformat()
-    today = "2025-06-06"  # For testing purposes, you can set a fixed date
+    today = date.today().isoformat()
+    # today = "2025-06-06"  # For testing purposes, you can set a fixed date
     logger.info(f"[Scheduler] Starting scheduled update for {today}")
 
     if data_for_date_exists(today):

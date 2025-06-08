@@ -1,6 +1,8 @@
 import sqlite3
 from pathlib import Path
 from log_config import logger
+
+
 DB_PATH = Path("data/daily_stats.db")
 
 def init_db():
