@@ -1,7 +1,7 @@
 from loguru import logger
 from pathlib import Path
 
-log_path = Path("data") / "etl.log"
+log_path = Path("logs") / "etl.log"
 log_path.parent.mkdir(parents=True, exist_ok=True)
 log_path.touch(exist_ok=True)
 
