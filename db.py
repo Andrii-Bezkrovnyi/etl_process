@@ -34,3 +34,13 @@ def upsert_data(conn, rows):
         """, (row["date"], row["campaign_id"], row["spend"], row["conversions"], row["cpa"]))
     conn.commit()
     logger.info("Data upserted successfully")
+
+def data_for_date_exists(date_str: str) -> bool:
+    if not DB_PATH.exists():
+        return False
+    conn = sqlite3.connect(DB_PATH)
+    cur = conn.cursor()
+    cur.execute("SELECT COUNT(*) FROM daily_stats WHERE date = ?", (date_str,))
+    count = cur.fetchone()[0]
+    conn.close()
+    return count > 0  # Returns True if data exists for the given date
