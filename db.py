@@ -5,7 +5,8 @@ from log_config import logger
 
 DB_PATH = Path("data/daily_stats.db")
 
-def init_db():
+
+def init_db() -> sqlite3.Connection:
     conn = sqlite3.connect(DB_PATH)
     cur = conn.cursor()
     cur.execute("""
@@ -22,7 +23,8 @@ def init_db():
     logger.info("Initialized database and ensured table exists")
     return conn
 
-def upsert_data(conn, rows):
+
+def upsert_data(conn, rows) -> None:
     cur = conn.cursor()
     for row in rows:
         cur.execute("""
@@ -33,9 +35,17 @@ def upsert_data(conn, rows):
                 spend=excluded.spend,
                 conversions=excluded.conversions,
                 cpa=excluded.cpa
-        """, (row["date"], row["campaign_id"], row["spend"], row["conversions"], row["cpa"]))
+        """, (
+            row["date"],
+            row["campaign_id"],
+            row["spend"],
+            row["conversions"],
+            row["cpa"]
+        )
+            )
     conn.commit()
     logger.info("Data upserted successfully")
+
 
 def data_for_date_exists(date_str: str) -> bool:
     if not DB_PATH.exists():
