@@ -5,13 +5,13 @@ import json
 from pathlib import Path
 
 @retry(
-    stop=stop_after_attempt(3),                  # максимум 3 попытки
-    wait=wait_fixed(2),                          # между попытками ждать 2 секунды
-    retry=retry_if_exception_type((OSError,))    # повторять при ошибках чтения
+    stop=stop_after_attempt(3),                 # maximum 3 attempts
+    wait=wait_fixed(2),                         # wait 2 seconds between attempts
+    retry=retry_if_exception_type((OSError,))  # retry on reading errors
 )
 def load_json_data(path: Path | str) -> list[dict]:
     path = Path(path)
-    logger.debug(f"Загрузка файла {path}")
+    logger.debug(f"Loading file {path}")
 
     with open(path, encoding="utf-8") as f:
         return json.load(f)
@@ -35,7 +35,7 @@ def merge_data(spend_data, conv_data):
             "spend": values["spend"],
             "conversions": values["conversions"]
         })
-    logger.debug(f"Объединено {len(result)} записей")
+    logger.debug(f"Merged {len(result)} records")
     return result
 
 def calculate_cpa(data):
@@ -43,5 +43,5 @@ def calculate_cpa(data):
         conversions = row["conversions"]
         spend = row["spend"]
         row["cpa"] = round(spend / conversions, 2) if conversions else None
-    logger.debug("Расчёт CPA завершён")
+    logger.debug("CPA calculation completed")
     return data

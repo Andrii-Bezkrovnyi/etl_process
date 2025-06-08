@@ -5,7 +5,7 @@ from db import init_db, upsert_data
 
 
 def main(start_date: str, end_date: str):
-    logger.info(f"Запуск обработки за период: {start_date} - {end_date}")
+    logger.info(f"Starting processing for period: {start_date} - {end_date}")
 
     fb_data = load_json_data("data/fb_spend.json")
     conv_data = load_json_data("data/network_conv.json")
@@ -19,7 +19,9 @@ def main(start_date: str, end_date: str):
     conn = init_db()
     upsert_data(conn, calculated)
 
-    logger.success(f"Успешно обновлено {len(calculated)} строк")
+    logger.success(
+        f"Successfully updated {len(calculated)} rows from {start_date} to {end_date}"
+    )
 
 
 if __name__ == "__main__":

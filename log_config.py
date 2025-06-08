@@ -1,4 +1,3 @@
-# log_config.py
 from loguru import logger
 from pathlib import Path
 

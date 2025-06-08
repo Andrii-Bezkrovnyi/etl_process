@@ -17,7 +17,7 @@ def init_db():
         )
     """)
     conn.commit()
-    logger.info("Инициализация базы данных завершена")
+    logger.info("Initialized database and ensured table exists")
     return conn
 
 def upsert_data(conn, rows):
@@ -33,4 +33,4 @@ def upsert_data(conn, rows):
                 cpa=excluded.cpa
         """, (row["date"], row["campaign_id"], row["spend"], row["conversions"], row["cpa"]))
     conn.commit()
-    logger.info("Данные успешно записаны в базу")
+    logger.info("Data upserted successfully")
